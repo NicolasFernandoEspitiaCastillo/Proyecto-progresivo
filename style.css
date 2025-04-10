@@ -2,145 +2,184 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  }
-  
-  body {
-    background: linear-gradient(to bottom, #000000 0%, #040b20 100%);
-    color: #fff;
-    line-height: 1.6;
-  }
-  
-  .header {
-    background: linear-gradient(to bottom, #000000 100%, #040b20 0%);
-    padding: 16px;
-    position: sticky;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    overflow-x: hidden;
+    background: linear-gradient(to bottom, #0B0B20, #000010);
+    position: relative;
+    color: white;
+}
+
+/* Fondo de estrellas */
+body::before, body::after {
+    content: '';
+    position: fixed;
     top: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .nasa__logo {
-    font-weight: bold;
-    font-size: 24px;
-    letter-spacing: 2px;
-    border-bottom: 2px solid white;
-    padding-bottom: 2px;
-  }
-  
-  .hamburger {
-    width: 24px;
-    height: 20px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  .hamburger span {
-    display: block;
-    height: 2px;
-    width: 100%;
-    background-color: white;
-    border-radius: 2px;
-  }
-  .container__main {
-    position: relative;
-    height: 100vh;
-    background: linear-gradient(to bottom, #000000 0%, #040b20 100%);
-    overflow: hidden;
-    text-align: center;
-  }
-  .main__content {
-    position: absolute;
-    top: 50%;
     left: 0;
-    transform: translateY(-50%);
-    padding: 20px;
     width: 100%;
-  }
-  
-  .main__paragraph {
-    font-size: 18px;
-    margin-bottom: 8px;
-    font-weight: bold;
-  }
-  
-  .main__title {
-    font-size: 36px;
-    font-weight: bold;
-    line-height: 1.2;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-  }
-  
-  .main__description {
-    font-size: 14px;
-    margin-bottom: 24px;
-    opacity: 0.8;
-    max-width: 100%;
-  }
-  
-  .main__btn {
-    display: inline-block;
-    padding: 8px 24px;
-    background-color: transparent;
-    color: white;
-    text-decoration: none;
-    border: 1px solid white;
-    border-radius: 20px;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 14px;
-    text-align: center;
-  }
-  .main__btn:hover{ 
-  background-color: white;
-  color: #000;
-  }
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
 
-  .frontPage__title {
-    font-size: 32px;
-    font-weight: bold;
-    letter-spacing: 4px;
-    margin-bottom: 16px;
-    text-shadow: 0 0 10px rgba(255,255,255,0.5);
-    text-transform: uppercase;
-  }
-  .frontPage__subtitle {
-    font-size: 16px;
-    font-weight: 300;
-    margin-bottom: 40px;
-    opacity: 0.8;
-  }
-  
-  .frontPage__btn {
-    padding: 12px 36px;
-    border: 1px solid white;
-    background-color: transparent;
-    color: white;
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    animation: pulse 2s infinite;
-    text-decoration: none;
-    display: inline-block;
-  }
-  .frontPage__btn:hover {
-    background-color: white;
-    color: #000;
-  }
+/* Primera capa de estrellas (más pequeñas) */
+body::before {
+    background-image: 
+        radial-gradient(1px 1px at 25% 35%, white, rgba(255,255,255,0)),
+        radial-gradient(1px 1px at 50% 75%, white, rgba(255,255,255,0)),
+        radial-gradient(1px 1px at 75% 15%, white, rgba(255,255,255,0)),
+        radial-gradient(1px 1px at 10% 60%, white, rgba(255,255,255,0)),
+        radial-gradient(1px 1px at 85% 40%, white, rgba(255,255,255,0));
+    background-size: 300px 300px;
+    animation: twinkle 4s ease-in-out infinite alternate;
+}
 
-  .content__frontPage {
-    text-align: center;
-    height: 100vh;
+/* Segunda capa de estrellas (más grandes) */
+body::after {
+    background-image: 
+        radial-gradient(2px 2px at 15% 25%, rgba(255,255,255,0.9), rgba(255,255,255,0)),
+        radial-gradient(2px 2px at 40% 65%, rgba(255,255,255,0.9), rgba(255,255,255,0)),
+        radial-gradient(2px 2px at 65% 5%, rgba(255,255,255,0.9), rgba(255,255,255,0)),
+        radial-gradient(2px 2px at 90% 80%, rgba(255,255,255,0.9), rgba(255,255,255,0)),
+        radial-gradient(2px 2px at 5% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    background-size: 400px 400px;
+    animation: twinkle 6s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes twinkle {
+0% {
+    opacity: 0.7;
+}
+100% {
+    opacity: 1;
+}
+}
+
+.header {
     display: flex;
-    position: relative;
-    justify-content: center;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-  }
+    padding: 20px;
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+}
+.icon__back {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.nasa__logo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.menu__hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: #fff;
+}
+
+.content__frontPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    padding: 20px;
+}
+
+.frontPage__title {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    color: #fff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.frontPage__subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    color: #ececec;
+    line-height: 1.5;
+}
+
+.frontPage__btn {
+    padding: 12px 30px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    text-decoration: none;
+    border: 2px solid #fff;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.frontPage__btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    transform: translateY(-3px);
+}
+
+.container__main {
+    min-height: 100vh;
+    padding: 100px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main__content {
+    max-width: 800px;
+    text-align: center;
+}
+
+.main__title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #fff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.main__description {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    color: #ddd;
+}
+
+.search__container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.search__input {
+    width: 100%;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 30px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    font-size: 1rem;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+.search__input:focus {
+    outline: none;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.search__input::placeholder {
+color: rgba(255, 255, 255, 0.7);
+}
