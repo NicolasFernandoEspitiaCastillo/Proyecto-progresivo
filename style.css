@@ -2,61 +2,46 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
+  }
 
-body {
+  body {
     font-family: Arial, sans-serif;
-    height: 100vh;
-    overflow-x: hidden;
-    background: linear-gradient(to bottom, #0B0B20, #000010);
-    position: relative;
+    /* background: linear-gradient(to bottom, #0B0B20, #000010); */
     color: white;
-}
+    background: url('img/fondo2.jpg') no-repeat center center fixed;
+    background-size: cover;
+    background-color: #0B0B20; /* por si no carga la imagen */
+    color: white;
+  }
 
-/* Fondo de estrellas */
-body::before, body::after {
-    content: '';
+  .stars-layer {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
     z-index: -1;
     pointer-events: none;
-}
-
-/* Primera capa de estrellas (más pequeñas) */
-body::before {
-    background-image: 
-        radial-gradient(1px 1px at 25% 35%, white, rgba(255,255,255,0)),
-        radial-gradient(1px 1px at 50% 75%, white, rgba(255,255,255,0)),
-        radial-gradient(1px 1px at 75% 15%, white, rgba(255,255,255,0)),
-        radial-gradient(1px 1px at 10% 60%, white, rgba(255,255,255,0)),
-        radial-gradient(1px 1px at 85% 40%, white, rgba(255,255,255,0));
-    background-size: 300px 300px;
-    animation: twinkle 4s ease-in-out infinite alternate;
-}
-
-/* Segunda capa de estrellas (más grandes) */
-body::after {
-    background-image: 
-        radial-gradient(2px 2px at 15% 25%, rgba(255,255,255,0.9), rgba(255,255,255,0)),
-        radial-gradient(2px 2px at 40% 65%, rgba(255,255,255,0.9), rgba(255,255,255,0)),
-        radial-gradient(2px 2px at 65% 5%, rgba(255,255,255,0.9), rgba(255,255,255,0)),
-        radial-gradient(2px 2px at 90% 80%, rgba(255,255,255,0.9), rgba(255,255,255,0)),
-        radial-gradient(2px 2px at 5% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    background: 
+      radial-gradient(1px 1px at 25% 35%, white, rgba(255,255,255,0)),
+      radial-gradient(1px 1px at 50% 75%, white, rgba(255,255,255,0)),
+      radial-gradient(1px 1px at 75% 15%, white, rgba(255,255,255,0)),
+      radial-gradient(1px 1px at 10% 60%, white, rgba(255,255,255,0)),
+      radial-gradient(1px 1px at 85% 40%, white, rgba(255,255,255,0)),
+      radial-gradient(2px 2px at 15% 25%, rgba(255,255,255,0.9), rgba(255,255,255,0)),
+      radial-gradient(2px 2px at 40% 65%, rgba(255,255,255,0.9), rgba(255,255,255,0)),
+      radial-gradient(2px 2px at 65% 5%, rgba(255,255,255,0.9), rgba(255,255,255,0)),
+      radial-gradient(2px 2px at 90% 80%, rgba(255,255,255,0.9), rgba(255,255,255,0)),
+      radial-gradient(2px 2px at 5% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
     background-size: 400px 400px;
-    animation: twinkle 6s ease-in-out infinite alternate-reverse;
-}
+    animation: twinkle 6s ease-in-out infinite alternate;
+  }
 
-@keyframes twinkle {
-0% {
-    opacity: 0.7;
-}
-100% {
-    opacity: 1;
-}
-}
+  @keyframes twinkle {
+    0% { opacity: 0.6; }
+    100% { opacity: 1; }
+  }
 
 .header {
     display: flex;
@@ -164,7 +149,7 @@ body::after {
 .search__input {
     width: 100%;
     padding: 12px 20px;
-    border: none;
+    border: 2px *solid* #fff;
     border-radius: 30px;
     background-color: rgba(255, 255, 255, 0.1);
     color: #fff;
@@ -172,8 +157,13 @@ body::after {
     font-size: 1rem;
     backdrop-filter: blur(5px);
     transition: all 0.3s ease;
+    font-weight: bold;
 }
-
+.search__input:hover{
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  transform: translateY(-3px);
+}
 .search__input:focus {
     outline: none;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
@@ -182,4 +172,219 @@ body::after {
 
 .search__input::placeholder {
 color: rgba(255, 255, 255, 0.7);
+}
+#planet-info-wrapper {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  /* Contenido interno */
+  .planet__card {
+    color: #fff;
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: left;
+  }
+  
+  .planet__card h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #fff;
+    text-shadow: 0 0 5px rgba(255,255,255,0.7);
+  }
+  
+  .planet__card p {
+    margin-bottom: 8px;
+  }
+
+  .main-container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+
+  }
+
+  .left-side {
+    flex: 1;
+    background: url('jupiter.jpg') no-repeat center center;
+    background-size: cover;
+  }
+
+  .right-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background: url('img/fondo2.jpg') ;
+  }
+
+  .planet-title {
+    font-size: 3rem;
+    margin-bottom: 30px;
+    text-shadow: 0 0 8px white;
+  }
+
+  .planet-info {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+  }
+
+  .planet-info p {
+    font-size: 1.2rem;
+    margin: 12px 0;
+  }
+
+  .back-btn {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 10px 20px;
+    border: 2px solid #fff;
+    border-radius: 30px;
+    text-decoration: none;
+    color: #fff;  
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+  }
+
+  .back-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    transform: translateY(-3px);
+  }
+  .left-side {
+filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+}
+.favorite-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #222;
+  color: #ffd700;
+  border: 2px solid #ffd700;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.favorite-btn:hover {
+  background-color: #ffd700;
+  color: #222;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  transform: translateY(-3px);
+}
+.favorite-icon {
+  position: fixed;
+  top: 20px;
+  right: 25px;
+  font-size: 2rem;
+  text-decoration: none;
+  color: gold;
+  transition: transform 0.3s, color 0.3s;
+  z-index: 999;
+}
+
+.favorite-icon:hover {
+  transform: scale(1.2);
+  color: #ffd700;
+  
+}
+.body_favorite {
+  background-color: #0b0b15;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.body_favorite h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.buttons-top {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.btn {
+  background-color: #111;
+  border: 2px solid #ffd700;
+  color: #ffd700;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: all 0.3s;
+}
+
+.btn:hover {
+  background-color: #ffd700;
+  color: #111;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  transform: translateY(-3px);
+}
+
+.planet-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.planet-item {
+  background-color: #111;
+  border: 1px solid #ffd700;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 18px;
+  font-size: 1.2em;
+  color: #ffd700;
+  transition: all 0.3s;
+}
+
+.planet-item span {
+  cursor: pointer;
+}
+
+.delete-btn {
+  background-color: transparent;
+  border: none;
+  color: #ff4c4c;
+  font-size: 1.1em;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.delete-btn:hover {
+  color: #ff1a1a;
+}
+
+.empty {
+  margin-top: 30px;
+  color: #aaa;
+  font-size: 1.2em;
 }

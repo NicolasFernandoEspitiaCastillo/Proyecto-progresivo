@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>NASA Homepage</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="main-container">
+    <div class="left-side"></div>
+
+    <div class="right-side" id="planet-container">
+      <h2 class="planet-title">Loading...</h2>
+      <div class="planet-info" id="planet-info"></div>
+      <button id="moons-btn" class="back-btn" style="display:none;">🌙 Moons</button>
+      <div id="moons-list" style="display:none; margin-top: 15px;"></div>
+      <button id="favButton" class="favorite-btn">⭐ Add to Favorites</button>
+    </div>
+    
+  </div>    
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const planet = urlParams.get("name");
+    const infoDiv = document.getElementById("planet-info");
+    const title = document.querySelector(".planet-title");
+    const leftSide = document.querySelector(".left-side");
+    const favButton = document.getElementById("favButton");
+
+    // 🪐 Mapeo de planetas con sus imágenes
+    const planetImages = {
+      mercury: "img/mercurio.jpg",
+      venus: "img/venus.jpg",
+      earth: "img/Tierra.jpg",
+      mars: "img/marte-espacio.jpg",
+      jupiter: "img/jupiter.jpg",
+      saturn: "img/saturno.jpeg",
+      uranus: "img/urano.jpg",
+      neptune: "img/neptuno.jpg",
+    };
+
+    if (planet) {
+      // 🔁 Establecer el fondo si existe imagen
+      const planetImg = planetImages[planet.toLowerCase()];
+      if (planetImg) {
+        leftSide.style.backgroundImage = `url('${planetImg}')`;
+      }
+
+      fetch(`https://api.le-systeme-solaire.net/rest/bodies/${planet}`)
+        .then(response => {
+          if (!response.ok) throw new Error("Planet not found");
+          return response.json();
+        })
+        .then(data => {
+          if (!data.englishName || !data.isPlanet) {
+            infoDiv.innerHTML = "<p>❌ This body is not a valid planet.</p>";
+            title.textContent = "Error";
+            favButton.style.display = "none";
+            return;
+          }
+
+          title.textContent = data.englishName;
+
+          infoDiv.innerHTML = `
+            <p><strong>Gravity:</strong> ${Math.round(data.gravity)} m/s²</p>
+            <p><strong>Mass:</strong> ${Math.round(data.mass.massValue)} × 10^${data.mass.massExponent} kg</p>
+            <p><strong>Day Length:</strong> ${Math.round(data.sideralRotation)} hours</p>
+            <p><strong>Orbit Length:</strong> ${Math.round(data.sideralOrbit)} days</p>
+            <a href="index.html" class="back-btn">Return</a>`;
+
+          const moonsBtn = document.getElementById("moons-btn");
+          const moonsList = document.getElementById("moons-list");
+
+          if (data.moons && data.moons.length > 0) {
+            moonsBtn.style.display = "inline-block";
+
+            moonsBtn.addEventListener("click", () => {
+              if (moonsList.style.display === "none") {
+                moonsList.innerHTML = `
+                  <h3>Moons of ${data.englishName}:</h3>
+                  <ul style="list-style: disc; text-align: left; max-height: 200px; overflow-y: auto;">
+                    ${data.moons.map(moon => `<li>${moon.moon}</li>`).join("")}
+                  </ul>
+                `;
+                moonsList.style.display = "block";
+                moonsBtn.textContent = "🌙 Hide moons";
+              } else {
+                moonsList.style.display = "none";
+                moonsBtn.textContent = "🌙 See moons";
+              }
+            });
+          }
+        })
+        .catch(error => {
+          title.textContent = "Error";
+          infoDiv.innerHTML = `
+            <p>❌ Planet not found or error loading data.</p>
+            <a href="Page2.html" class="back-btn" style="margin-top: 15px; display: inline-block;">Return to Search</a>
+          `;
+          favButton.style.display = "none";
+        });
+    }
+
+    function addToFavorites() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const planetName = urlParams.get("name");
+
+      if (!planetName) return;
+
+      let favorites = JSON.parse(localStorage.getItem("favoritePlanets")) || [];
+
+      if (!favorites.includes(planetName)) {
+        favorites.push(planetName);
+        localStorage.setItem("favoritePlanets", JSON.stringify(favorites));
+        alert(`${planetName} added to favorites! 🚀`);
+      } else {
+        alert(`${planetName} is already in your favorites.`);
+      }
+    }
+
+    // ⬇️ Conecta el botón de favoritos con la función
+    favButton.addEventListener("click", addToFavorites);
+  </script>
+
+</body>
+</html>

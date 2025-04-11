@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Favorite Planets</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="body_favorite">
+
+  <h1> Your Favorite Planets</h1>
+
+  <div class="buttons-top">
+    <button class="btn" onclick="goToHome()"> Home</button>
+    <button class="btn" onclick="clearFavorites()"> Clear All</button>
+  </div>
+
+  <div id="planetContainer" class="planet-list"></div>
+  <div id="emptyMessage" class="empty"></div>
+
+  <script>
+    const container = document.getElementById("planetContainer");
+    const emptyMessage = document.getElementById("emptyMessage");
+
+    let favorites = JSON.parse(localStorage.getItem("favoritePlanets")) || [];
+
+    function saveFavorites() {
+      localStorage.setItem("favoritePlanets", JSON.stringify(favorites));
+    }
+
+    function renderFavorites() {
+      container.innerHTML = "";
+      if (favorites.length === 0) {
+        emptyMessage.textContent = "You haven't added any favorite planets yet.";
+        return;
+      } else {
+        emptyMessage.textContent = "";
+      }
+
+      favorites.forEach((planet, index) => {
+        const div = document.createElement("div");
+        div.className = "planet-item";
+
+        const name = document.createElement("span");
+        name.textContent = planet.charAt(0).toUpperCase() + planet.slice(1);
+        name.onclick = () => window.location.href = `Page3.html?name=${planet}`;
+
+        const delBtn = document.createElement("button");
+        delBtn.className = "delete-btn";
+        delBtn.textContent = "✖";
+        delBtn.onclick = () => {
+          favorites.splice(index, 1);
+          saveFavorites();
+          renderFavorites();
+        };
+
+        div.appendChild(name);
+        div.appendChild(delBtn);
+        container.appendChild(div);
+      });
+    }
+
+    function goToHome() {
+      window.location.href = "index.html";
+    }
+
+    function clearFavorites() {
+      if (confirm("Are you sure you want to remove all favorite planets?")) {
+        favorites = [];
+        saveFavorites();
+        renderFavorites();
+      }
+    }
+
+    renderFavorites();
+  </script>
+</body>
+</html>

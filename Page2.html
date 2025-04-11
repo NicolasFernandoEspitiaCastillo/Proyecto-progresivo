@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="stars-layer"></div>
     <header class="header">
         <a href="index.html"><button class="icon__back"><img src="img/icon-back.png"></button></a> 
     </header>
@@ -14,12 +15,28 @@
     <section id="Page2" class="container__main">
         <div class="main__content">
           <p class="main__paragraph"></p>
-          <h1 class="main__title">Planetas del Sistema Solar</h1>
-          <p class="main__description">Descubre información fascinante sobre los ocho planetas principales que orbitan alrededor de nuestra estrella.</p>
+          <h1 class="main__title">Planets of the Solar System</h1>
+          <p class="main__description">Discover fascinating information about the eight major planets orbiting our star.</p>
           <div class="search__container">
-            <input type="text" class="search__input" id="planetSearch" placeholder="Busca el planeta que desees">
+            <input type="text" id="planet-input" class="search__input" placeholder="Write a planet (ej: Mars)">
           </div>
-        </div>
     </section>
+
+
+    <script>
+        const input = document.getElementById("planet-input");  
+        const infoDiv = document.getElementById("planet-info");
+      
+        input.addEventListener("keydown", async (event) => {
+          if (event.key === "Enter") {
+            const planet = input.value.trim().toLowerCase();
+      
+            if (planet) {
+                // redirige con el nombre del planeta como parámetro
+                window.location.href = `Page3.html?name=${planet}`;
+            }
+          }
+        });
+      </script>
 </body>
 </html>
